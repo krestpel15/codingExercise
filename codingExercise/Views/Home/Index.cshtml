@@ -1,0 +1,60 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="utf-8" />
+    <script src="~/Scripts/jquery-1.10.2.js"></script>
+</head>
+<body>
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            Test Data from API
+        </div>   <!--en dof panel-heading -->
+        <div class="panel-body">
+            <table class="table table-bordered" id="Table">
+                <tr>
+                    <th>Cost Centre</th>
+                    <th>Amount before GST</th>
+                    <th>GST</th>
+                    <th>Total</th>
+                    <th>Payment Method</th>
+                    <th>Vendor</th>
+                    <th>Description</th>
+                    <th>Date</th>
+                </tr>  <!--end of table-row -->
+            </table>   <!--end of table -->
+        </div> <!--end of Panel-body -->
+    </div> <!--end of Panel -->
+
+
+            <script>
+                $(document).ready(function () {
+                    $.ajax({
+                        type: "GET",
+                        url: "Api/Calculator/GetDetails",
+                        contentType: "application/json; charset=utf-8",
+                        dataType: "json",
+                        success: function (data) {
+                            //alert(JSON.stringify(data));
+                            $("#DIV").html('');
+                            var DIV = '';
+                            $.each(data, function (i, item) {
+                                var details = "<tr>" +
+                                    "<td id='cost_centre'>" + item.cost_centre + "</td>" +
+                                    "<td id='beforeGST'>" + item.beforeGST + "</td>" +
+                                    "<td id = 'GST'>" + item.GST + "</td>" +
+                                    "<td id='total'>" + item.total + "</td>" +
+                                    "<td id='payment_method'>" + item.payment_method + "</td>" +
+                                    "<td id='vendor'>" + item.vendor + "</td>" +
+                                    "<td id='description'>" + item.description + "</td>" +
+                                    "<td id='date'>" + item.date + "</td>" +
+                                    "</tr>";
+                                $('#Table').append(details);
+                            }); //End of foreach Loop
+                            console.log(data);
+                        }, //End of AJAX Success function
+                    });
+                });
+            </script>
+</body>
+</html>
